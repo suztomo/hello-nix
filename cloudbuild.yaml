@@ -23,15 +23,15 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'tag'
-      - 'python-multi:latest'
-      - '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/python-multi:${_TAG}'
+      - 'python-multi-nix:latest'
+      - '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/python-multi-nix:${_TAG}'
     id: 'docker-tag'
 
   # 4. Push to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'push'
-      - '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/python-multi:${_TAG}'
+      - '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/python-multi-nix:${_TAG}'
     id: 'docker-push'
 
 substitutions:
@@ -43,7 +43,4 @@ timeout: 7200s  # 2 hours
 
 options:
   machineType: 'E2_HIGHCPU_8'
-  logging: CLOUD_LOGGING_ONLY
-
-options:
   logging: CLOUD_LOGGING_ONLY

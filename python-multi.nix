@@ -94,7 +94,7 @@ let
 
 in
 pkgs.dockerTools.buildLayeredImage {
-  name = "python-multi";
+  name = "python-multi-nix";
   tag = "latest";
 
   contents = systemPackages ++ [
