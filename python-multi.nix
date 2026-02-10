@@ -113,7 +113,7 @@ pkgs.dockerTools.buildLayeredImage {
     Entrypoint = [ "${pkgs.bashInteractive}/bin/bash" ];
     Labels = {
       "org.opencontainers.image.description" = "Multi-Python testing environment with Cloud SDK and system dependencies";
-      "org.opencontainers.image.source" = "https://github.com/GoogleCloudPlatform/testing-infra-docker";
+      "org.opencontainers.image.source" = "https://github.com/suztomo/hello-nix";
     };
   };
 }
