@@ -1,22 +1,22 @@
 steps:
   # 1. Build the Docker image tarball using Nix
-  # We use the nixos/nix image which has the nix-command and flakes features enabled.
   - name: 'nixos/nix:latest'
     entrypoint: 'sh'
     args:
       - '-c'
       - |
         nix build . --extra-experimental-features 'nix-command flakes'
+        # Follow the symlink and copy the actual file to /workspace
+        cp $(readlink -f result) python-multi.tar.gz
     id: 'nix-build'
 
   # 2. Load the resulting tarball into the local Docker daemon
-  # 'result' is a symlink to the .tar.gz image in the Nix store.
   - name: 'gcr.io/cloud-builders/docker'
     entrypoint: 'bash'
     args:
       - '-c'
       - |
-        docker load < result
+        docker load < python-multi.tar.gz
     id: 'docker-load'
 
   # 3. Tag the image for Artifact Registry
@@ -38,6 +38,12 @@ substitutions:
   _LOCATION: 'us-central1'
   _REPOSITORY: 'images'
   _TAG: 'latest'
+
+timeout: 7200s  # 2 hours
+
+options:
+  machineType: 'E2_HIGHCPU_8'
+  logging: CLOUD_LOGGING_ONLY
 
 options:
   logging: CLOUD_LOGGING_ONLY
